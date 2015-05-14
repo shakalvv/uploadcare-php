@@ -164,6 +164,32 @@ class Uploader
   }
 
   /**
+     * @param array $files - files path 
+     * @return string uuid - group id
+     * @throws Exception
+     */  
+  public function groupFromPath(array $files)
+  {
+    $uploadFiles = array(
+        'pub_key' => $this->api->getPublicKey(),
+    );
+    for($i = 0; $i < count($files); $i++) {
+      if (!file_exists($files[$i])){
+        throw new \Exception("File $files[$i] doesn't exist!");
+      }
+      $uploadFiles["files[$i]"] = $this->fromPath($files[$i])->getUuid();
+    }
+    $ch = $this->__initRequest('group');
+    $this->__setRequestType($ch);
+    $this->__setData($ch, $uploadFiles);
+    $this->__setHeaders($ch);
+
+    $data = $this->__runRequest($ch);
+    $group_id = $data->id;
+    return $group_id;
+  }
+
+  /**
    * Init upload request and return curl resource
    *
    * @param array $data
