@@ -3,6 +3,8 @@ namespace Uploadcare;
 
 class Group
 {
+  private $re_uuid = '!/?(?P<uuid>[a-z0-9]{8}-(?:[a-z0-9]{4}-){3}[a-z0-9]{12}~(\d){1,})!';
+
   /**
    * Uploadcare cdn host
    *
@@ -34,12 +36,17 @@ class Group
   /**
    * Constructs an object with specified ID
    *
-   * @param string $group_id Uploadcare group_id
+   * @param string $group_id_or_url Uploadcare group_id or url
    * @param Uploadcare $api Uploadcare class instance
    */
-  public function __construct($group_id, Api $api)
+  public function __construct($group_id_or_url, Api $api)
   {
-    $this->group_id = $group_id;
+    $matches = array();
+    if(!preg_match($this->re_uuid, $group_id_or_url, $matches)) {
+      throw new \Exception('UUID not found');
+    }
+
+    $this->group_id = $matches['uuid'];
     $this->api = $api;
   }
 
@@ -107,3 +114,4 @@ class Group
     return $result;
   }
 }
+
