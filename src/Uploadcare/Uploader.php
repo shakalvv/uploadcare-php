@@ -190,6 +190,32 @@ class Uploader
   }
 
   /**
+    * @param array $files
+    * @param bool $check_status
+    * @param int $timeout
+    * @param int $max_attempts
+    * @return mixed
+    * @throws \Exception
+    */
+  public function groupFromUrls(array $files,  $check_status = true, $timeout = 1, $max_attempts = 5)
+  {
+    $uploadFiles = array(
+      'pub_key' => $this->api->getPublicKey(),
+    );
+    for($i = 0; $i < count($files); $i++) {
+      $uploadFiles["files[$i]"] = $this->fromUrl($files[$i])->getUuid();
+    }
+    $ch = $this->__initRequest('group');
+    $this->__setRequestType($ch);
+    $this->__setData($ch, $uploadFiles);
+    $this->__setHeaders($ch);
+
+    $data = $this->__runRequest($ch);
+    $group_id = $data->id;
+    return $group_id;
+  }
+
+  /**
    * Init upload request and return curl resource
    *
    * @param array $data
