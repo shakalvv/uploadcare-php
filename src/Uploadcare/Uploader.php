@@ -203,7 +203,7 @@ class Uploader
       'pub_key' => $this->api->getPublicKey(),
     );
     for($i = 0; $i < count($files); $i++) {
-      $uploadFiles["files[$i]"] = $this->fromUrl($files[$i])->getUuid();
+      $uploadFiles["files[$i]"] = $this->fromUrl($files[$i], $check_status, $timeout, $max_attempts)->getUuid();
     }
     $ch = $this->__initRequest('group');
     $this->__setRequestType($ch);
