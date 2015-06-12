@@ -32,7 +32,7 @@ class Api
    *
    * @var string
    */
-  public $cdn_host = 'www.ucarecdn.com';
+  public $cdn_host = 'cdn.appstor.re';
 
   /**
    * Widget instance.
