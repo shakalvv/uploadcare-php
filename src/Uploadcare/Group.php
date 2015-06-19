@@ -98,7 +98,7 @@ class Group
     return $this->data['cdn_url'];
   }
 
-  /**
+    /**
    * Get all Files
    *
    * @return array
@@ -113,5 +113,24 @@ class Group
     }
     return $result;
   }
+
+  /**
+   * Copy the group.
+   *
+   * @param string $target Name of custom storage.
+   * @return File|string
+   */
+  public function copy($target = null)
+  {
+    $new_group = array(
+        'pub_key' => $this->api->getPublicKey(),
+    );
+    $files = $this->getFiles();
+    for($i = 0; $i < count($files); $i++) {
+      $new_group["files[$i]"] = $files[$i]->copy($target)->getUrl();
+    }
+    return $this->api->uploader->makeGroupFromFiles($new_group);
+  }
+
 }
 

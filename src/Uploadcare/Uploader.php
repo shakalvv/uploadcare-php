@@ -215,7 +215,20 @@ class Uploader
     return $group_id;
   }
 
-  /**
+
+  public function makeGroupFromFiles($files)
+  {
+    $ch = $this->__initRequest('group');
+    $this->__setRequestType($ch);
+    $this->__setHeaders($ch);
+    $this->__setData($ch, $files);
+
+    $data = $this->__runRequest($ch);
+    $group_id = $data->id;
+    return $group_id;
+  }
+
+    /**
    * Init upload request and return curl resource
    *
    * @param array $data
