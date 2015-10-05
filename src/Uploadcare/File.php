@@ -167,7 +167,7 @@ class File
    */
   public function getUrl($postfix = null)
   {
-    $url = sprintf('http://%s/%s/', $this->api->cdn_host, $this->uuid);
+    $url = sprintf('https://%s/%s/', $this->api->cdn_host, $this->uuid);
     if($this->default_effects) {
       $url = sprintf('%s-/%s', $url, $this->default_effects);
     }

@@ -32,7 +32,7 @@ class Api
    *
    * @var string
    */
-  public $cdn_host = 'cdn.appstor.re';
+  public $cdn_host = 'cdn2.appstor.re';
 
   /**
    * Widget instance.
